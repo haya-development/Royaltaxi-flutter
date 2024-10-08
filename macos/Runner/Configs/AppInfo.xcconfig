@@ -8,7 +8,7 @@
 PRODUCT_NAME = royaltaxi
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = spc.royal.royaltaxi
+PRODUCT_BUNDLE_IDENTIFIER = spc.royal.taxi
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 spc.royal. All rights reserved.

@@ -1,4 +1,4 @@
-package spc.royal.royaltaxi
+package spc.royal.taxi
 
 import io.flutter.embedding.android.FlutterActivity
 
