@@ -1,12 +1,30 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:royaltaxi/ui/screens/profile_screen.dart';
-import 'package:royaltaxi/ui/screens/rider_map_screen.dart';
-import 'package:royaltaxi/generated/l10n.dart';
-import 'package:royaltaxi/utils/custom_theme.dart';
+import 'package:royaltaxi/utils/notifications.dart';
 
-void main() {
-  runApp(const MyApp());
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Future.wait([
+    EasyLocalization.ensureInitialized(),
+    initialize(),
+    Firebase.initializeApp(),
+  ]);
+  initNotifications();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: Phoenix(
+        child: const MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,15 +34,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: CustomTheme.theme1,
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       home: ProfileScreen()
     );
   }
