@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:royaltaxi/ui/screens/profile_screen.dart';
 import 'package:royaltaxi/ui/screens/rider_map_screen.dart';
 import 'package:royaltaxi/generated/l10n.dart';
+import 'package:royaltaxi/utils/custom_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,10 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: CustomTheme.theme1,
         localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
