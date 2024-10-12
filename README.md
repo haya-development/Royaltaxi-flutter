@@ -127,6 +127,20 @@ Build the project from source:
 ❯ flutter pub get
 ```
 
+ ```bash
+   flutter pub get
+   ```
+
+
+   ```bash
+   flutter pub run build_runner build
+   ```
+
+
+   ```bash
+   flutter pub run easy_localization:generate --source-dir=assets/translations --format=keys
+   ```
+
 ### 🤖 Usage
 
 To run the project, execute the following command:
