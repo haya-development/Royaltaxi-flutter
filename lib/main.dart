@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:royaltaxi/ui/screens/profile_screen.dart';
 import 'package:royaltaxi/utils/notifications.dart';
 
 
@@ -11,7 +10,6 @@ Future<void> main() async {
   await Future.wait([
     EasyLocalization.ensureInitialized(),
     initialize(),
-    Firebase.initializeApp(),
   ]);
   initNotifications();
 
