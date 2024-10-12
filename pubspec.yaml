@@ -60,6 +60,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   flutter_phoenix: ^1.1.1
   new_version_plus: ^0.0.12
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_test:
