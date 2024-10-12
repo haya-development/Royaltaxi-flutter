@@ -3,6 +3,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nb_utils/nb_utils.dart' as nb;
+import 'package:royaltaxi/generated/codegen_loader.g.dart';
 
 /// get current locale language code
 String getLanguageCode() {
