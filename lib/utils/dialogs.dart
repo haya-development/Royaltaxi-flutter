@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:nb_utils/nb_utils.dart' as nb;
 import 'package:new_version_plus/new_version_plus.dart';
+import 'package:royaltaxi/data/config/config.dart';
 import 'package:royaltaxi/generated/assets.dart';
+import 'package:royaltaxi/generated/codegen_loader.g.dart';
 import 'package:royaltaxi/utils/widgets.dart';
 
 
@@ -36,30 +38,6 @@ checkVersion() async {
   }
 }
 
-confirmAge(context) async {
-  bool ageConfirmed = nb.getBoolAsync('ageConfirmed', defaultValue: false);
-  if (!ageConfirmed) {
-    AwesomeDialog(
-      dialogType: DialogType.warning,
-      context: context,
-      title: LocaleKeys.confirm.tr(),
-      desc: LocaleKeys.are_you_18.tr(),
-      btnOkOnPress: () {
-        nb.setValue('ageConfirmed', true);
-        checkVersion();
-      },
-      useRootNavigator: true,
-      btnOkText: LocaleKeys.yes.tr(),
-      btnCancelText: LocaleKeys.no.tr(),
-      btnCancelOnPress: () {
-        SystemNavigator.pop(animated: true);
-      },
-      dismissOnBackKeyPress: false,
-      dismissOnTouchOutside: false,
-    ).show();
-  }
-}
-
 confirmTermsAnPrivacy(context) async {
   bool confirmed =
       nb.getBoolAsync('terms_and_privacy_confirmed', defaultValue: false);
@@ -75,7 +53,6 @@ confirmTermsAnPrivacy(context) async {
       ),
       btnOkOnPress: () async {
         nb.setValue('terms_and_privacy_confirmed', true);
-        confirmAge(context);
       },
       btnOkText: LocaleKeys.yes.tr(),
       btnCancelText: LocaleKeys.no.tr(),
