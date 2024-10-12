@@ -1,0 +1,76 @@
+{
+  "app_name": "وصال",
+  "home": "الرئيسية",
+
+  "favorites": "المفضلة",
+  "all": "الكل",
+  "not_selected": "لم يتم الاختيار",
+  "about": "حول",
+  "day": "اليوم",
+  "error": "خطأ",
+  "ok": "تمام",
+  "egp": "جنيه",
+  "are_you_sure": "هل أنت متأكد؟",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "your_balance": "رصيدك",
+  "yes": "نعم",
+  "are_you_sure_delete_account": "هل انت متأكد من حذف حسابك ؟ لن يتم التراجع في هذا الاجراء وسيتم تنفيذه فورا.\n سيتم حذف جميع بياناتك ولن يحتفظ وصال باي بيانات لك بعد الحذف",
+
+  "no": "لا",
+  "confirm": "تأكيد",
+  "update_your_app": "تحديث التطبيق الخاص بك من اصدار {from} الي {to}",
+  "update": "تحديث",
+  "soon": "قريبا",
+
+  "account_deleted_successfully": "تم حذف الحساب بنجاح",
+  "delete_account": "حذف الحساب",
+  "deleted_error": "خطأ اثناء الحذف",
+  "deleted_successfully": "تم الحذف بنجاح",
+  "account": "الحساب",
+  "settings": "الإعدادات",
+  "privacy": "الخصوصية",
+  "logout": "تسجيل الخروج",
+  "did_not_receive_code": "لم تتلقى الرمز؟",
+  "resend_code": "إعادة إرسال الرمز",
+  "continue_": "متابعة",
+  "google": "Google",
+  "login": "تسجيل الدخول",
+  "enter_phone_number": "ادخل رقم الهاتف",
+  "enter_email": "ادخل البريد الإلكتروني",
+  "verification_code": "رمز التحقق",
+  "phone_number": "رقم الهاتف",
+  "no_data": "لا يوجد بيانات",
+  "unknown_error": "حدث خطأ ما",
+  "enter_valid_phone": "أدخل هاتف صالح",
+  "enter_phone": "أدخل رقم الهاتف",
+  "choose_country": "اختر رمز البلد",
+  "verification_code_message": "سوف نقوم بارسال رمز التحقق المكون من 4 أرقام",
+  "payments": "المدفوعات",
+  "account_info": "معلومات الحساب",
+  "name": "الإسم",
+  "sex": "النوع",
+  "phone": "الهاتف",
+  "profile": "الملف الشخصي",
+  "title": "العنوان",
+
+  "details" : "التفاصيل",
+  "price"  : "السعر",
+
+  "required" : "مطلوب",
+
+
+  "male" : "ذكر",
+  "female" : "أنثى",
+  "save" : "حفظ",
+  "phone_is_required" : "الهاتف مطلوب",
+
+  "update_account" : "تحديث الحساب",
+  "country" : "دولة",
+
+  "success" : "نجاح",
+
+  "profile_updated_error" : "خطأ في تحديث الملف الشخصي",
+  "profile_updated_successfully" : "تم تحديث الملف الشخصي بنجاح"
+
+}
