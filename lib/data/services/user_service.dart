@@ -1,5 +1,6 @@
 
 import 'package:http/http.dart' as http;
+import 'package:royaltaxi/utils/helper.dart';
 
 import 'api_service.dart';
 
@@ -16,14 +17,6 @@ class UserService extends ApiService {
     var response = await get(url, auth: false);
 
     return getApiObjectData<User>(response , User.fromJson);
-  }
-
-  Future<List<User>?> getBlockedUsers() async {
-    String url = "users/blocked";
-
-    var response = await get(url, auth: true);
-
-    return getApiListData<User>(response , User.fromJson);
   }
 
   Future<bool> updateUserFcmToken(String token) async {
