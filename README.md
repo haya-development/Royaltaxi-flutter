@@ -82,7 +82,7 @@
     │   │       ├── api_service.dart
     │   │       ├── favourite_service.dart
     │   │       ├── location_service.dart
-    │   │       ├── orders_service.dart
+    │   │       ├── order_service.dart
     │   │       ├── payment_service.dart
     │   │       └── user_service.dart
     │   ├── main.dart
