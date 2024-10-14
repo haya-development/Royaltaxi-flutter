@@ -69,7 +69,7 @@ aboutDialog(context) async {
   var info = await nb.getPackageInfo();
   showAboutDialog(
     context: context,
-    applicationIcon: Image.asset(Assets.imagesLogo ,height: 50,width: 50,),
+    applicationIcon: Image.asset(Assets.imagesA21 ,height: 50,width: 50,),
     applicationName: "${LocaleKeys.app_name.tr()} (Fun Zone Ent. Group)",
     applicationVersion: "${info.versionName} (${info.versionCode})",
     children: [

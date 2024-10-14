@@ -1,7 +1,5 @@
-import 'package:http/http.dart' as http;
 import 'api_service.dart';
 
-/// This service handles all payment-related API calls.
 class PaymentService extends ApiService {
   static PaymentService? _instance;
 
@@ -9,61 +7,85 @@ class PaymentService extends ApiService {
 
   PaymentService._();
 
-  /// Creates a new payment order.
+  /// Makes an authorization request for PayMop with required and optional details.
   ///
-  /// This function sends a request to make a payment order.
-  ///
-  /// **Parameters:**
-  /// - `paymentData`: A map containing payment details such as:
-  ///   - `"price"`: The price for the order (required, as a String).
-  ///   - `"payment_type"`: Type of payment (required).
-  ///   - `"first_name"`: First name of the payer (required).
-  ///   - `"last_name"`: Last name of the payer (required).
-  ///   - `"email"`: Payer's email (required).
-  ///   - `"phone_number"`: Payer's phone number (required).
-  ///   - `"apartment"`, `"floor"`, `"street"`, `"building"`, `"shipping_method"`, `"postal_code"`, `"city"`, `"country"`, `"state"`: Optional shipping information.
-  ///
-  /// **Returns:**
-  /// - `true` if the payment was successful, `false` otherwise.
-  Future<bool> makePaymentOrder(Map<String, dynamic> paymentData) async {
+  /// [price] - The amount to be charged. (Mandatory)
+  /// [paymentType] - The payment type (e.g., "CARD", "WALLET"). (Mandatory)
+  /// [firstName] - First name of the payer. (Mandatory)
+  /// [lastName] - Last name of the payer. (Mandatory)
+  /// [email] - Payer's email address. (Mandatory)
+  /// [phoneNumber] - Payer's phone number. (Mandatory)
+  /// Optional parameters include [apartment], [floor], [street], [building],
+  /// [shippingMethod], [postalCode], [city], [country], and [state].
+  Future<Map<String, dynamic>?> makePaymopAuth({
+    required String price,
+    required String paymentType,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phoneNumber,
+    String? apartment,
+    String? floor,
+    String? street,
+    String? building,
+    String? shippingMethod,
+    String? postalCode,
+    String? city,
+    String? country,
+    String? state,
+  }) async {
     const String url = "api/make-payment-order";
-    var response = await post(url, paymentData, auth: true);
 
-    return response?["success"] == true;
+    var payload = {
+      "price": price,
+      "payment_type": paymentType,
+      "first_name": firstName,
+      "last_name": lastName,
+      "email": email,
+      "phone_number": phoneNumber,
+      if (apartment != null) "apartment": apartment,
+      if (floor != null) "floor": floor,
+      if (street != null) "street": street,
+      if (building != null) "building": building,
+      if (shippingMethod != null) "shipping_method": shippingMethod,
+      if (postalCode != null) "postal_code": postalCode,
+      if (city != null) "city": city,
+      if (country != null) "country": country,
+      if (state != null) "state": state,
+    };
+
+    var response = await post(url, payload, auth: true);
+    return response as Map<String, dynamic>?;
   }
 
-  /// Handles Paymob processed callback.
+  /// Makes a payment order request with required payment details.
   ///
-  /// This function processes the callback data from Paymob.
-  ///
-  /// **Parameters:**
-  /// - `data`: A map containing:
-  ///   - `"price"`: The price for the order (required).
-  ///   - `"payment_type"`: The type of payment (required).
-  ///   - `"first_name"`, `"last_name"`, `"email"`, `"phone_number"`: Payer details (all required).
-  ///
-  /// **Returns:**
-  /// - `true` if the callback was processed successfully, `false` otherwise.
-  Future<bool> paymobProcessedCallback(Map<String, dynamic> data) async {
-    const String url = "api/payment/paymob";
-    var response = await post(url, data, auth: true);
+  /// [price] - The amount to be charged. (Mandatory)
+  /// [paymentType] - The payment type (e.g., "WALLET", "CARD"). (Mandatory)
+  /// [firstName] - First name of the payer. (Mandatory)
+  /// [lastName] - Last name of the payer. (Mandatory)
+  /// [email] - Payer's email address. (Mandatory)
+  /// [phoneNumber] - Payer's phone number. (Mandatory)
+  Future<Map<String, dynamic>?> makePaymentOrder({
+    required String price,
+    required String paymentType,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phoneNumber,
+  }) async {
+    const String url = "api/user/make-payment-order";
 
-    return response?["success"] == true;
-  }
+    var payload = {
+      "price": price,
+      "payment_type": paymentType,
+      "first_name": firstName,
+      "last_name": lastName,
+      "email": email,
+      "phone_number": phoneNumber,
+    };
 
-  /// Sends Paymob response callback.
-  ///
-  /// This function sends a response callback to Paymob.
-  ///
-  /// **Parameters:**
-  /// - `uid`: A string containing the unique identifier for the transaction (required).
-  ///
-  /// **Returns:**
-  /// - `true` if the callback was successful, `false` otherwise.
-  Future<bool> paymobResponseCallback(String uid) async {
-    const String url = "api/user";
-    var response = await post(url, {"uid": uid}, auth: true);
-
-    return response?["success"] == true;
+    var response = await post(url, payload, auth: true);
+    return response as Map<String, dynamic>?;
   }
 }
