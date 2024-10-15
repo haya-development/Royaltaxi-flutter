@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:royaltaxi/ui/screens/spash_screen.dart';
 import 'package:royaltaxi/utils/notifications.dart';
 
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
-      home: ProfileScreen()
+      home: const SplashScreen()
     );
   }
 }
