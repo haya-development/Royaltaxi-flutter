@@ -86,6 +86,32 @@ class ApiService {
     }
   }
 
+  /// patch data request
+  /// used for edit
+  Future<dynamic> patch(String api, dynamic payloadObj,
+      {bool auth = false}) async {
+    var uri = Uri.parse("${Config.apiBaseUrl}/$api");
+
+    logger.info('PUT API REQUEST:: ${uri.toString()}');
+
+    var payload = json.encode(payloadObj);
+    try {
+      var headers = _getHeaders(auth: auth);
+      if (headers == null) {
+        return null;
+      }
+      var response = await http
+          .patch(uri, body: payload, headers: headers)
+          .timeout(const Duration(seconds: Config.timeOutDuration));
+      return _processResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException(
+          'API not responded in time', uri.toString());
+    }
+  }
+
   /// delete request
   /// used for delete data
   Future<dynamic> delete(String api, {bool auth = false}) async {
@@ -204,7 +230,7 @@ class ApiService {
         return null;
       }
     } else {
-      headers.addAll({HttpHeaders.authorizationHeader: 'Bearer $apiToken'});
+      headers.addAll({"idToken": apiToken});
     }
 
     return headers;

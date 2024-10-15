@@ -2,6 +2,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart' as nb;
 import 'package:royaltaxi/generated/codegen_loader.g.dart';
 
@@ -48,6 +49,16 @@ bool isRTL() {
       "ar";
 }
 
+bool isLightTheme() {
+  if(nb.navigatorKey.currentState?.overlay?.context != null) {
+    return Theme
+        .of(nb.navigatorKey.currentState!.overlay!.context)
+        .brightness == Brightness.light;
+  }
+
+  return true;
+}
+
 List<T>? getApiListData<T>(
     Map<String, dynamic>? data, T Function(Map<String, dynamic>) fromJson) {
   List<dynamic> dataList = data?['data'] ?? [];
@@ -61,4 +72,16 @@ T? getApiObjectData<T>(
   }
 
   return fromJson(data['data'] ?? {});
+}
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF$hexColor";
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }

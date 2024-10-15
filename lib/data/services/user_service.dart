@@ -1,7 +1,7 @@
 
-import 'package:http/http.dart' as http;
+import 'package:royaltaxi/data/models/user.dart';
 import 'package:royaltaxi/utils/helper.dart';
-
+import 'package:http/http.dart' as http;
 import 'api_service.dart';
 
 class UserService extends ApiService {
