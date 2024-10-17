@@ -7,15 +7,21 @@ class MyTextFieldWidget extends StatefulWidget {
   final String hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final bool readOnly;
   final TextInputType keyboardType;
   final bool hideTextField;
   final VoidCallback click;
+  final String? value;
+  final TextEditingController? controller;
 
   const MyTextFieldWidget({
     super.key,
     required this.hintText,
     this.prefixIcon,
+    this.controller,
+    this.value,
     this.suffixIcon,
+    this.readOnly = false,
     this.keyboardType = TextInputType.text,
     this.hideTextField = false,
     required this.click,
@@ -33,7 +39,10 @@ class _MyTextFieldState extends State<MyTextFieldWidget> {
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10))),
       child: TextFormField(
+        controller: widget.controller,
         keyboardType: widget.keyboardType,
+        readOnly: widget.readOnly,
+        initialValue: widget.value,
         onTap: () {
           widget.click();
         },

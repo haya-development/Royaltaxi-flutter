@@ -1,5 +1,5 @@
 {
-  "app_name": "Wesal",
+  "app_name": "Royal",
   "home": "Home",
 
   "favorites": "Favorites",
@@ -58,9 +58,15 @@
   "price"  : "Price",
 
   "required" : "Required",
+  "otp_verified_successfully" : "OTP verified successfully",
 
-  "male" : "Male",
-  "female" : "Female",
+  "error_while_authenticating" : "Error while authenticating",
+  "error_while_send_otp" : "Error while send otp",
+  "otp_sent_successfully" : "OTP sent successfully",
+  "verification_id_not_found" : "Verification id not found",
+  "invalid_otp" : "Invalid otp",
+
+
   "save" : "Save",
   "phone_is_required" : "Phone number is required",
 
@@ -70,5 +76,42 @@
   "success" : "Success",
 
   "profile_updated_error" : "Error updating profile",
-  "profile_updated_successfully" : "Profile updated successfully"
+  "profile_updated_successfully" : "Profile updated successfully",
+
+  "select_country": "Select a country",
+  "search_country": "Search for a country",
+  "iraq": "Iraq",
+  "iraq_code": "(+964)",
+
+  "welcome_back": "Welcome back, Guy!",
+  "sign_in_to_account": "Sign in to your account",
+  "mobile_number": "Mobile number",
+  "sign_in": "Sign In",
+  "agree_to_terms": "By clicking 'Sign In' you agree to our",
+  "terms_and_conditions": "terms and conditions",
+  "as_well_as_our": "as well as our",
+  "privacy_policy": "privacy policy",
+
+  "verify_phone_number": "Verify phone number",
+  "check_sms": "Check your SMS messages. We've sent you the PIN at",
+  "please_enter_otp": "Please enter OTP",
+  "verify": "Verify",
+  "start_now": "Start now",
+  "did_not_receive_sms": "Didn't receive SMS?",
+  "create_account": "Create your account",
+  "already_have_account": "Already have an account?",
+  "log_in": "Log in",
+  "enter_name": "Enter your name",
+  "gender": "Gender",
+  "male1": "Male",
+  "female1" : "Female",
+  "sign_up": "Sign up",
+  "edit_profile": "Edit profile",
+  "your_trips": "Your Trips",
+  "payment": "Payment",
+  "notifications": "Notifications",
+  "promos": "Promos",
+  "help": "Help",
+  "free_trips": "Free trips",
+  "where_are_you_going": "Where are you going?"
 }
