@@ -23,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: _buildDrawer(),
+      drawer: _buildDrawer(), // Main drawer (left side)
+      endDrawer: _buildEndDrawer(), // End drawer (right side) with ChooseDestinationScreen
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Build the drawer
+  // Build the main drawer (left drawer)
   Widget _buildDrawer() {
     return Drawer(
       child: Padding(
@@ -74,6 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Build the end drawer (right drawer) with ChooseDestinationScreen
+  Widget _buildEndDrawer() {
+    return const Drawer(
+      child: ChooseDestinationScreen(),
+    );
+  }
+
   // Drawer header with user info
   Widget _buildDrawerHeader() {
     return Row(
@@ -83,9 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Travis Reeves",
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: "SfUiDisplay",
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -146,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
       alignment: Alignment.topCenter,
       children: [
         InkWell(
-          onTap: () => goTo(const ChooseDestinationScreen()),
+          onTap: () => _scaffoldKey.currentState!.openEndDrawer(), // Open the end drawer when the map is tapped
           child: Image.asset(
             Assets.imagesS11,
             fit: BoxFit.fill,
