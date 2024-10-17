@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Build the end drawer (right drawer) with ChooseDestinationScreen
-  Widget _buildEndDrawer() {
+  Widget _buildEndDrawer(){
     return const Drawer(
       child: ChooseDestinationScreen(),
     );
