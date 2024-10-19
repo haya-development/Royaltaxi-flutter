@@ -1,5 +1,5 @@
 {
-  "app_name": "وصال",
+  "app_name": "رويال",
   "home": "الرئيسية",
 
   "favorites": "المفضلة",
@@ -59,8 +59,7 @@
 
   "required" : "مطلوب",
 
-  "male" : "ذكر",
-  "female" : "أنثى",
+
   "save" : "حفظ",
   "phone_is_required" : "الهاتف مطلوب",
 
@@ -68,8 +67,52 @@
   "country" : "دولة",
 
   "success" : "نجاح",
+  "otp_verified_successfully" : "تم التحقق من OTP بنجاح",
+
+  "error_while_authenticating" : "خطأ أثناء المصادقة",
+  "error_while_send_otp" : "خطأ أثناء إرسال OTP",
+  "otp_sent_successfully" : "تم إرسال otp بنجاح",
+  "verification_id_not_found" : "لم يتم العثور على معرف التحقق",
+  "invalid_otp" : "رمز OTP غير صالح",
 
   "profile_updated_error" : "خطأ في تحديث الملف الشخصي",
-  "profile_updated_successfully" : "تم تحديث الملف الشخصي بنجاح"
+  "profile_updated_successfully" : "تم تحديث الملف الشخصي بنجاح",
+
+  "select_country": "اختر دولة",
+  "search_country": "ابحث عن دولة",
+  "iraq": "العراق",
+  "iraq_code": "(+964)",
+
+  "welcome_back": "مرحبًا بعودتك،",
+  "sign_in_to_account": "تسجيل الدخول إلى حسابك",
+  "mobile_number": "رقم الجوال",
+  "sign_in": "تسجيل الدخول",
+  "agree_to_terms": "بالنقر على 'تسجيل الدخول'، فإنك توافق على",
+  "terms_and_conditions": "الشروط والأحكام",
+  "as_well_as_our": "وكذلك",
+  "privacy_policy": "سياسة الخصوصية",
+
+  "verify_phone_number": "تأكيد رقم الهاتف",
+  "check_sms": "تحقق من رسائل SMS الخاصة بك. لقد أرسلنا لك رمز PIN على",
+  "please_enter_otp": "الرجاء إدخال رمز OTP",
+  "verify": "تأكيد",
+  "start_now": "ابدأ الآن",
+  "did_not_receive_sms": "لم تتلقَ الرسالة النصية؟",
+  "create_account": "إنشاء حسابك",
+  "already_have_account": "هل لديك حساب بالفعل؟",
+  "log_in": "تسجيل الدخول",
+  "enter_name": "أدخل اسمك",
+  "gender": "الجنس",
+  "male1" : "ذكر",
+  "female1" : "أنثى",
+  "sign_up": "اشتراك",
+  "edit_profile": "تعديل الملف الشخصي",
+  "your_trips": "رحلاتك",
+  "payment": "الدفع",
+  "notifications": "الإشعارات",
+  "promos": "العروض",
+  "help": "مساعدة",
+  "free_trips": "رحلات مجانية",
+  "where_are_you_going": "إلى أين تذهب؟"
 
 }
