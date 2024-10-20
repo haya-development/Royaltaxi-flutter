@@ -5,7 +5,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:royaltaxi/generated/codegen_loader.g.dart';
 import 'package:royaltaxi/utils/toaster.dart';
-
+import 'package:http/http.dart' as http;
 import 'api_service.dart';
 
 class AuthService extends ApiService {
@@ -77,15 +77,53 @@ class AuthService extends ApiService {
 
       // Sign in with the created credential
       var user = await FirebaseAuth.instance.signInWithCredential(credential);
-      primary(user.toString());
       Toaster.showSuccess(
           context: navigatorKey.currentState!.context,
           text: LocaleKeys.otp_verified_successfully.tr());
+
+      if(user.user?.phoneNumber != null) {
+        var result = await checkRiderExists(user.user!.phoneNumber!);
+        primary(result);
+      }
+
     } catch (e) {
       // Show error if the OTP verification fails
       Toaster.showError(
           context: navigatorKey.currentState!.context,
           text: LocaleKeys.invalid_otp.tr());
     }
+  }
+
+  /// Checks if a rider exists using their identifier.
+  ///
+  /// [riderId] is the unique identifier of the rider.
+  /// Returns a message indicating the success or failure of the request.
+  Future checkRiderExists(String riderId) async {
+    String url = "rider/exists/$riderId";
+    var response = await get(url, auth: true);
+    return response;
+  }
+
+  /// Registers a new rider.
+  ///
+  /// [name] is the rider's name.
+  /// [gender] is the rider's gender.
+  /// [filePath] is the path to the rider's file for upload.
+  /// Returns a message indicating if the rider was created successfully.
+  Future<String> createNewRider(String name, String gender, String filePath) async {
+    String url = "rider";
+
+    var fields = {
+      "name": name,
+      "gender": gender,
+    };
+
+    var files = <http.MultipartFile>[];
+    if (filePath.isNotEmpty) {
+      files.add(await http.MultipartFile.fromPath('file', filePath));
+    }
+
+    var response = await multipart(url, files, fields, auth: true);
+    return response;
   }
 }

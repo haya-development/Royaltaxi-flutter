@@ -230,7 +230,7 @@ class ApiService {
         return null;
       }
     } else {
-      headers.addAll({"idToken": apiToken});
+      headers.addAll({HttpHeaders.authorizationHeader: "Bearer $apiToken"});
     }
 
     return headers;
