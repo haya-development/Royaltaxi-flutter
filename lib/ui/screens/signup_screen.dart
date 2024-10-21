@@ -1,13 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:royaltaxi/data/models/user.dart';
+import 'package:royaltaxi/data/services/auth_service.dart';
 import 'package:royaltaxi/generated/assets.dart';
 import 'package:royaltaxi/generated/codegen_loader.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:royaltaxi/ui/screens/login_screen.dart';
 import 'package:royaltaxi/ui/widgets/my_button_widget.dart';
 import 'package:royaltaxi/ui/widgets/my_text_field_widget.dart';
+import 'package:royaltaxi/utils/navigate.dart';
+import 'package:royaltaxi/utils/toaster.dart';
 
 class SignupScreen extends StatefulWidget {
   final String phone;
+
   const SignupScreen({super.key, required this.phone});
 
   @override
@@ -15,11 +21,14 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignupScreen> {
+  TextEditingController nameController = TextEditingController();
+  ValueNotifier<String?> genderListenable = ValueNotifier(null);
 
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +108,7 @@ class _SignUpScreenState extends State<SignupScreen> {
               ),
             ),
             InkWell(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginScreen())),
+              onTap: () => goTo(const LoginScreen()),
               child: Text(
                 LocaleKeys.log_in.tr(), // Use LocaleKeys
                 style: TextStyle(
@@ -131,6 +140,7 @@ class _SignUpScreenState extends State<SignupScreen> {
         ),
         const SizedBox(height: 5),
         MyTextFieldWidget(
+          controller: nameController,
           hintText: LocaleKeys.enter_name.tr(), // Use LocaleKeys
           click: () {},
         ),
@@ -152,16 +162,28 @@ class _SignUpScreenState extends State<SignupScreen> {
           ),
         ),
         const SizedBox(height: 5),
-        DropdownButtonFormField<String>(
-          items: [
-            DropdownMenuItem(value: 'male', child: Text(LocaleKeys.male1.tr())), // Use LocaleKeys
-            DropdownMenuItem(value: 'female', child: Text(LocaleKeys.female1.tr())), // Use LocaleKeys
-          ],
-          onChanged: (value) {},
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-          ),
-        ),
+        ValueListenableBuilder(
+          valueListenable: genderListenable,
+          builder: (context, value, child) {
+            return DropdownButtonFormField<String>(
+              items: [
+                DropdownMenuItem(
+                    value: 'male', child: Text(LocaleKeys.male1.tr())),
+                // Use LocaleKeys
+                DropdownMenuItem(
+                    value: 'female', child: Text(LocaleKeys.female1.tr())),
+                // Use LocaleKeys
+              ],
+              value: genderListenable.value,
+              onChanged: (value) {
+                genderListenable.value = value;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            );
+          },
+        )
       ],
     );
   }
@@ -181,7 +203,7 @@ class _SignUpScreenState extends State<SignupScreen> {
         ),
         const SizedBox(height: 5),
         MyTextFieldWidget(
-          value:widget.phone,
+          value: widget.phone,
           hintText: LocaleKeys.phone_number.tr(), // Use LocaleKeys
           readOnly: true, // Phone is readonly
           click: () {},
@@ -195,7 +217,19 @@ class _SignUpScreenState extends State<SignupScreen> {
     return MyButtonWidget(
       btnName: LocaleKeys.sign_up.tr(), // Use LocaleKeys
       click: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+        User user = User(
+            name: nameController.text,
+            gender: genderListenable.value,
+            phone: widget.phone);
+
+        if(user.gender.isEmptyOrNull){
+          return Toaster.showError(context: context, text: LocaleKeys.gender_is_required.tr());
+        }
+
+        if(user.name.isEmptyOrNull){
+          return Toaster.showError(context: context, text: LocaleKeys.name_is_required.tr());
+        }
+        AuthService.instance.createNewRider(user);
       },
     );
   }

@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_colored_print/flutter_colored_print.dart';
+import 'package:http/http.dart' as http;
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:royaltaxi/data/models/user.dart' as model;
 import 'package:royaltaxi/generated/codegen_loader.g.dart';
+import 'package:royaltaxi/utils/helper.dart';
 import 'package:royaltaxi/utils/toaster.dart';
-import 'package:http/http.dart' as http;
+
 import 'api_service.dart';
 
 class AuthService extends ApiService {
@@ -14,6 +17,11 @@ class AuthService extends ApiService {
   static AuthService get instance => _instance ??= AuthService._();
 
   AuthService._();
+
+  bool get isAuthed {
+    var token = getUserToken();
+    return !token.isEmptyOrNull;
+  }
 
   String? _verificationId; // To store the verification ID
 
@@ -60,7 +68,7 @@ class AuthService extends ApiService {
   }
 
   // Function to verify the OTP entered by the user
-  Future<void> verifyOtp(String otp) async {
+  Future verifyOtp(String otp) async {
     if (_verificationId == null) {
       Toaster.showError(
           context: navigatorKey.currentState!.context,
@@ -77,15 +85,14 @@ class AuthService extends ApiService {
 
       // Sign in with the created credential
       var user = await FirebaseAuth.instance.signInWithCredential(credential);
-      Toaster.showSuccess(
-          context: navigatorKey.currentState!.context,
-          text: LocaleKeys.otp_verified_successfully.tr());
 
-      if(user.user?.phoneNumber != null) {
-        var result = await checkRiderExists(user.user!.phoneNumber!);
-        primary(result);
+      if (navigatorKey.currentState!.context.mounted) {
+        Toaster.showSuccess(
+            context: navigatorKey.currentState!.context,
+            text: LocaleKeys.otp_verified_successfully.tr());
       }
 
+      return user.credential?.accessToken;
     } catch (e) {
       // Show error if the OTP verification fails
       Toaster.showError(
@@ -96,12 +103,13 @@ class AuthService extends ApiService {
 
   /// Checks if a rider exists using their identifier.
   ///
-  /// [riderId] is the unique identifier of the rider.
+  /// [riderPhone] is the unique identifier of the rider.
   /// Returns a message indicating the success or failure of the request.
-  Future checkRiderExists(String riderId) async {
-    String url = "rider/exists/$riderId";
+  Future<bool> checkRiderExists(String riderPhone) async {
+    String url = "rider/exists/$riderPhone";
     var response = await get(url, auth: true);
-    return response;
+    primary(response);
+    return response != null;
   }
 
   /// Registers a new rider.
@@ -110,20 +118,21 @@ class AuthService extends ApiService {
   /// [gender] is the rider's gender.
   /// [filePath] is the path to the rider's file for upload.
   /// Returns a message indicating if the rider was created successfully.
-  Future<String> createNewRider(String name, String gender, String filePath) async {
+  Future<bool> createNewRider(model.User user) async {
     String url = "rider";
 
-    var fields = {
-      "name": name,
-      "gender": gender,
-    };
-
+    var fields = user.toJson();
+    fields.removeWhere(
+      (key, value) => value == null,
+    );
     var files = <http.MultipartFile>[];
-    if (filePath.isNotEmpty) {
-      files.add(await http.MultipartFile.fromPath('file', filePath));
+    if (!(fields["file"] as String?).isEmptyOrNull) {
+      files.add(await http.MultipartFile.fromPath('file', fields["file"]));
     }
 
-    var response = await multipart(url, files, fields, auth: true);
-    return response;
+    var response = await multipart(url, files, fields);
+    primary(response);
+
+    return response != null;
   }
 }

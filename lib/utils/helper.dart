@@ -16,7 +16,7 @@ String getUserToken() {
 }
 
 /// set current user api token
-Future<bool> setUserToken(String token) {
+Future<bool> setUserToken(String? token) {
   return nb.setValue("user_token", token);
 }
 

@@ -1,3 +1,6 @@
+import 'package:royaltaxi/data/models/favourite.dart';
+import 'package:royaltaxi/utils/helper.dart';
+
 import 'api_service.dart';
 
 class FavoriteService extends ApiService {
@@ -9,33 +12,26 @@ class FavoriteService extends ApiService {
 
   /// Adds a location to the user's favorites.
   ///
-  /// [locationUid] is the unique identifier for the location.
   /// [name] is the name of the location.
   /// [lat] is the latitude of the location.
   /// [lang] is the longitude of the location.
   /// Returns `true` if the location was successfully added.
-  Future<bool> addToFavorites(
-      String locationUid, String name, double lat, double lang) async {
-    const String url = "api/user/add_to_fav";
-    var payload = {
-      "location_uid": locationUid,
-      "name": name,
-      "lat": lat,
-      "lang": lang
-    };
+  Future<bool> addToFavorites(Favourite favourite) async {
+    const String url = "rider/favorites";
+    var payload = favourite.toJson();
 
     var response = await post(url, payload, auth: true);
-    return response?["status"] == true;
+    return response != null;
   }
 
   /// Retrieves all favorite locations of the user.
   ///
   /// Returns a list of favorite locations.
-  Future<List<Map<String, dynamic>>?> getAllUserFavorites() async {
-    const String url = "api/user/all_user_fav";
+  Future<List<Favourite>?> getAllUserFavorites() async {
+    const String url = "rider/favorites";
 
     var response = await get(url, auth: true);
-    return response as List<Map<String, dynamic>>?;
+    return getApiListData<Favourite>(response, Favourite.fromJson);
   }
 
   /// Deletes a favorite location by its ID.
@@ -43,9 +39,20 @@ class FavoriteService extends ApiService {
   /// [favId] is the ID of the favorite location to delete.
   /// Returns `true` if the location was successfully deleted.
   Future<bool> deleteFavorite(String favId) async {
-    String url = "api/user/delete_user_fav/$favId";
+    String url = "rider/favorites/$favId";
 
     var response = await get(url, auth: true);
-    return response?["status"] == true;
+    return response != null;
+  }
+
+  /// Deletes all favorites location by its User.
+  ///
+  /// [favId] is the ID of the favorite location to delete.
+  /// Returns `true` if the location was successfully deleted.
+  Future<bool> deleteAllFavorite() async {
+    String url = "rider/favorites";
+
+    var response = await get(url, auth: true);
+    return response != null;
   }
 }

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,12 +7,15 @@ import 'package:royaltaxi/data/services/auth_service.dart';
 import 'package:royaltaxi/generated/assets.dart';
 import 'package:royaltaxi/generated/codegen_loader.g.dart';
 import 'package:royaltaxi/ui/screens/home_screen.dart';
+import 'package:royaltaxi/ui/screens/signup_screen.dart';
 import 'package:royaltaxi/ui/widgets/my_button_widget.dart';
+import 'package:royaltaxi/utils/helper.dart';
 import 'package:royaltaxi/utils/navigate.dart';
 import 'package:royaltaxi/utils/toaster.dart';
 
 class VerifyPhoneNumberScreen extends StatefulWidget {
   final String phone;
+
   const VerifyPhoneNumberScreen({super.key, required this.phone});
 
   @override
@@ -119,9 +122,9 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumberScreen> {
       fieldWidth: 40,
       autoFocus: true,
       textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
+            color: Theme.of(context).primaryColor,
+            fontSize: 16,
+          ),
       onSubmit: (value) {
         otp = value;
         _verifyOtp();
@@ -175,10 +178,23 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumberScreen> {
   // Function to handle OTP verification logic
   Future<void> _verifyOtp() async {
     context.loaderOverlay.show();
-    await AuthService.instance.verifyOtp(otp!);
+
+    /// get user auth token from firebase
+    var token = await AuthService.instance.verifyOtp(otp!);
+    /// todo - top must be not null
     if (context.mounted) {
       context.loaderOverlay.hide();
     }
-    goToRemove(const HomeScreen());
+
+    /// save it locally
+    await setUserToken(token);
+
+    /// check if user exist (login) or not (signup)
+    bool isExist = await AuthService.instance.checkRiderExists(widget.phone);
+    if (isExist) {
+      goToRemove(const HomeScreen());
+    } else {
+      goToRemove(SignupScreen(phone: widget.phone));
+    }
   }
 }

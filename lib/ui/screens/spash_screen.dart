@@ -2,6 +2,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:royaltaxi/data/services/auth_service.dart';
 import 'package:royaltaxi/generated/assets.dart';
 import 'package:royaltaxi/generated/codegen_loader.g.dart';
 import 'package:royaltaxi/ui/screens/home_screen.dart';
@@ -69,7 +70,13 @@ class _SplashScreenState extends State<SplashScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
       child: InkWell(
-        onTap: () => goTo(HomeScreen()),
+        onTap: () {
+          if(AuthService.instance.isAuthed){
+            goTo(HomeScreen());
+          }else{
+            goTo(LoginScreen());
+          }
+        },
         child: Container(
           height: 55,
           width: double.infinity,

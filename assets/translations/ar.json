@@ -62,6 +62,8 @@
 
   "save" : "حفظ",
   "phone_is_required" : "الهاتف مطلوب",
+  "name_is_required" : "الاسم مطلوب",
+  "gender_is_required" : "النوع مطلوب",
 
   "update_account" : "تحديث الحساب",
   "country" : "دولة",

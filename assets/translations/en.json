@@ -56,6 +56,8 @@
 
   "details" : "Details",
   "price"  : "Price",
+  "name_is_required"  : "Name is required",
+  "gender_is_required"  : "Gender is required",
 
   "required" : "Required",
   "otp_verified_successfully" : "OTP verified successfully",
